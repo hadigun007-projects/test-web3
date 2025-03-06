@@ -97,9 +97,19 @@ const fetchCryptoData = async () => {
     console.error("Error fetching crypto data:", error);
   }
 };
+
 function formatCurrency(amount) {
     return new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(amount);
 }
+
+const copyToClipboard = async (addr: string) => {
+  try {
+    await navigator.clipboard.writeText(addr);
+    alert("Address copied to clipboard!");
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
+};
 
 
 </script>
@@ -119,7 +129,7 @@ function formatCurrency(amount) {
     </header>
     <section class="card">
       <p v-if="!account">No wallet connected</p>
-      <p v-if="account">Connected: {{ account }}</p>
+      <p v-if="account">Connected: {{ account.slice(0, 8) + "..." + account.slice(-8) }} <span @click="copyToClipboard(account)">copy</span></p>
       <p v-if="balance">Balance: {{ balance }} ETH</p>
       <p v-if="account"class="note">To switch wallets, use MetaMask.</p>
     </section>
@@ -151,6 +161,12 @@ function formatCurrency(amount) {
   </div>
 </template>
 <style scoped>
+p span{
+  cursor: pointer;
+  color: #A28CFF;
+  padding: 0.2rem 1rem;
+  background-color: #f4f4f4;
+}
 header {
   background-color: #A28CFF;
   color: white;
