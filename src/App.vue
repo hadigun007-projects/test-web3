@@ -1,11 +1,37 @@
 <script setup lang="ts">
+import { ethers } from "ethers";
+
+const connectMetaMask = async () => {
+  if (window.ethereum) {
+    console.log('here');
+    
+    try {
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      return { account: accounts[0], provider, signer };
+    } catch (error) {
+      console.error("User denied account access", error);
+      return null;
+    }
+  } else {
+    console.error("MetaMask not installed");
+    return null;
+  }
+};
+const connectWallet = async () => {
+  const connection = await connectMetaMask();
+  // if (connection) {
+  //   account.value = connection.account;
+  // }
+};
 </script>
 
 <template>
   <div>
     <header>
       <h1>App Test</h1>
-      <button>Connect Wallet</button>
+      <button @click="connectWallet">Connect Wallet</button>
     </header>
     <section class="card">
       <table>
