@@ -150,7 +150,6 @@ function formatCurrency(amount) {
     </section>
   </div>
 </template>
-
 <style scoped>
 header {
   background-color: #A28CFF;
@@ -159,7 +158,21 @@ header {
   text-align: center;
   display: flex;
   justify-content: space-between;
-  padding: 0.5 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+button {
+  background-color: white;
+  color: #A28CFF;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+button:hover {
+  background-color: #ddd;
 }
 .card {
   background-color: #f4f4f4;
@@ -175,7 +188,6 @@ table {
   border-collapse: collapse;
 }
 th, td {
-  /* border-bottom: 1px solid #ccc; */
   padding: 0.5rem;
   text-align: center;
 }
@@ -183,6 +195,58 @@ th {
   background-color: #f4f4f4;
 }
 table tr:nth-child(odd) {
-  background-color: #e4e4e4; /* Light gray for odd columns */
+  background-color: #e4e4e4;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  button {
+    padding: 0.5rem;
+    margin: 1rem 0.3rem;
+  }
+  header {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px;
+  }
+  .card {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  .card p {
+    font-size: 14px;
+  }
+  table {
+    font-size: 12px;
+  }
+  th, td {
+    padding: 0.3rem;
+  }
+  button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  button {
+    padding: 0.5rem;
+    margin: 1rem 0.3rem;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  th, td {
+    padding: 0.2rem;
+  }
+  .card p {
+    font-size: 10px;
+  }
+  button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
 }
 </style>
