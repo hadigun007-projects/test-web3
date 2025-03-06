@@ -113,6 +113,7 @@ const fetchCryptoData = async () => {
       
     </header>
     <section class="card">
+      <p v-if="!account">No wallet connected</p>
       <p v-if="account">Connected: {{ account }}</p>
       <p v-if="balance">Balance: {{ balance }} ETH</p>
       <p v-if="account"class="note">To switch wallets, use MetaMask.</p>
