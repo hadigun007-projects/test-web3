@@ -97,6 +97,11 @@ const fetchCryptoData = async () => {
     console.error("Error fetching crypto data:", error);
   }
 };
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(amount);
+}
+
+
 </script>
 
 <template>
@@ -125,8 +130,8 @@ const fetchCryptoData = async () => {
             <th></th>
             <th>Asset Name</th>
             <th>Ticker</th>
-            <th>Price</th>
-            <th>Total Volume</th>
+            <th>Price(USD)</th>
+            <th>Volume 24h (USD)</th>
           </tr>
         </thead>
         <tbody>
@@ -134,8 +139,8 @@ const fetchCryptoData = async () => {
             <td><img :src="crypto.image" alt="Crypto Logo" width="30" height="30" /></td>
             <td>{{ crypto.name }}</td>
             <td>{{ crypto.symbol.toUpperCase() }}</td>
-            <td>{{ crypto.current_price }}</td>
-            <td>{{ crypto.total_volume }}</td>
+            <td>{{ formatCurrency(crypto.current_price) }}</td>
+            <td>{{  formatCurrency(crypto.total_volume) }}</td>
           </tr>
         </tbody>
       </table>
