@@ -89,8 +89,6 @@ const disconnectWallet = async () => {
   alert("To fully disconnect, go to MetaMask and remove this site from the connected sites.");
 };
 
-// 35733dc2-0c10-4297-8bc2-2e414eb431bb
-
 const fetchCryptoData = async () => {
   try {
     const response = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1");
@@ -123,7 +121,7 @@ const fetchCryptoData = async () => {
       <table>
         <thead>
           <tr>
-            <th>Logo</th>
+            <th></th>
             <th>Asset Name</th>
             <th>Ticker</th>
             <th>Price</th>
