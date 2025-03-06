@@ -1,5 +1,63 @@
-# Vue 3 + TypeScript + Vite
+# Vue.js Web3 & Crypto Dashboard
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This project is a Vue.js application that allows users to connect their MetaMask wallet, view wallet balance, and fetch top 5 cryptocurrency data from CoinMarketCap.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+This app created for skill fest for Fullstack Position.
+
+## Features
+- Connect & Disconnect MetaMask Wallet
+- Display Wallet Address & Balance
+- Detect Wallet Address Change
+- Fetch Top 5 Cryptocurrencies from CoinMarketCap API
+
+## Installation
+
+### 1. Clone the Repository
+```sh
+git clone https://github.com/hadigun007-projects/test-web3.git
+cd git test-web3
+```
+
+### 2. Install Dependencies
+```sh
+npm install
+```
+
+### 3. Run the Development Server
+```sh
+npm run dev
+```
+
+## Usage
+
+### Connect Wallet
+1. Click **"Connect Wallet"**
+2. Grant permission in MetaMask
+3. Your wallet address and balance will be displayed
+
+### Disconnect Wallet
+- Click **"Disconnect Wallet"** (MetaMask must be manually disconnected in the extension for full logout)
+
+### Fetch Crypto Data
+- The app automatically fetches the **top 5 cryptocurrencies** from CoinMarketCap.
+
+## Deployment
+To deploy, build the project:
+```sh
+npm run build
+```
+Then, deploy the `/dist` folder to your hosting provider.
+
+## Technologies Used
+- Vue.js 3
+- ethers.js
+- MetaMask
+- CoinMarketCap API
+
+## License
+This project is open source under the [MIT License](LICENSE).
+
+## Authors
+[hadigun007](https://github.com/hadigun007)
+
+
