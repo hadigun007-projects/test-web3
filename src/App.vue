@@ -5,24 +5,53 @@ const selectedProvider = ref(null);
 const account = ref(null);
 const balance = ref(null);
 const cryptos = ref([]);
+const api_status = ref('loading');
 
 const connectMetaMask = async () => {
-  if (window.ethereum) {
-    try {
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-
-      return { account: accounts[0], provider, signer };
-    } catch (error) {
-      console.error("User denied account access", error);
+  try {
+    // Ensure window.ethereum exists
+    if (!window.ethereum) {
+      alert("MetaMask is not installed. Please install it to continue.");
       return null;
     }
-  } else {
-    console.error("MetaMask not installed");
+
+    let metamaskProvider = null;
+
+    // If multiple providers exist, explicitly select MetaMask
+    if (window.ethereum.providers) {
+      metamaskProvider = window.ethereum.providers.find((provider) => provider.isMetaMask);
+    } else if (window.ethereum.isMetaMask) {
+      metamaskProvider = window.ethereum;
+    }
+
+    // If MetaMask is not found, alert the user
+    if (!metamaskProvider) {
+      alert("MetaMask is not set as the default provider. Please switch to MetaMask.");
+      return null;
+    }
+
+    // Force MetaMask as the provider
+    window.ethereum = metamaskProvider;
+
+    // Request account access from MetaMask only
+    const accounts = await metamaskProvider.request({ method: "eth_requestAccounts" });
+
+    if (!accounts || accounts.length === 0) {
+      alert("No accounts found. Please unlock your MetaMask wallet or make sure not conflicted with another wallet provider(only enable metamask).");
+      return null;
+    }
+
+    // Set up Ethers.js provider & signer
+    const provider = new ethers.BrowserProvider(metamaskProvider);
+    const signer = await provider.getSigner();
+
+    return { account: accounts[0], provider, signer };
+  } catch (error) {
+    alert(`Error connecting to MetaMask: ${error.message}`);
     return null;
   }
 };
+
 
 const getWalletBalance = async (provider, address) => {
   if (!provider || !address) {
@@ -63,7 +92,6 @@ const handleAccountChange = async (accounts) => {
 
 onMounted(async () => {
   await fetchCryptoData();
-  await connectMetaMask();
   if (window.ethereum) {
     try {
       window.ethereum.on("accountsChanged", handleAccountChange);
@@ -93,7 +121,10 @@ const fetchCryptoData = async () => {
   try {
     const response = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1");
     cryptos.value = await response.json();
+    api_status.value = 'success';
   } catch (error) {
+    if(error.message.includes('429')) api_status.value = 'rate_limit_exceeded';
+    else api_status.value = 'error';
     console.error("Error fetching crypto data:", error);
   }
 };
