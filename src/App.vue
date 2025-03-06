@@ -9,7 +9,6 @@ const api_status = ref('loading');
 
 const connectMetaMask = async () => {
   try {
-    // Ensure window.ethereum exists
     if (!window.ethereum) {
       alert("MetaMask is not installed. Please install it to continue.");
       return null;
@@ -17,23 +16,19 @@ const connectMetaMask = async () => {
 
     let metamaskProvider = null;
 
-    // If multiple providers exist, explicitly select MetaMask
     if (window.ethereum.providers) {
       metamaskProvider = window.ethereum.providers.find((provider) => provider.isMetaMask);
     } else if (window.ethereum.isMetaMask) {
       metamaskProvider = window.ethereum;
     }
 
-    // If MetaMask is not found, alert the user
     if (!metamaskProvider) {
       alert("MetaMask is not set as the default provider. Please switch to MetaMask.");
       return null;
     }
 
-    // Force MetaMask as the provider
     window.ethereum = metamaskProvider;
 
-    // Request account access from MetaMask only
     const accounts = await metamaskProvider.request({ method: "eth_requestAccounts" });
 
     if (!accounts || accounts.length === 0) {
@@ -41,7 +36,6 @@ const connectMetaMask = async () => {
       return null;
     }
 
-    // Set up Ethers.js provider & signer
     const provider = new ethers.BrowserProvider(metamaskProvider);
     const signer = await provider.getSigner();
 
