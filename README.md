@@ -1,6 +1,6 @@
 # Vue.js Web3 & Crypto Dashboard
 
-This project is a Vue.js application that allows users to connect their MetaMask wallet, view wallet balance, and fetch top 5 cryptocurrency data from CoinMarketCap.
+This project is a Vue.js application that allows users to connect their MetaMask wallet, view wallet balance, and fetch top 5 cryptocurrency data from CoinGecko.
 
 This app created for skill fest for Fullstack Position.
 
@@ -8,7 +8,7 @@ This app created for skill fest for Fullstack Position.
 - Connect & Disconnect MetaMask Wallet
 - Display Wallet Address & Balance
 - Detect Wallet Address Change
-- Fetch Top 5 Cryptocurrencies from CoinMarketCap API
+- Fetch Top 5 Cryptocurrencies from CoinGecko API
 
 ## Installation
 
@@ -39,7 +39,7 @@ npm run dev
 - Click **"Disconnect Wallet"** (MetaMask must be manually disconnected in the extension for full logout)
 
 ### Fetch Crypto Data
-- The app automatically fetches the **top 5 cryptocurrencies** from CoinMarketCap.
+- The app automatically fetches the **top 5 cryptocurrencies** from CoinGecko.
 
 ## Deployment
 To deploy, build the project:
@@ -52,7 +52,7 @@ Then, deploy the `/dist` folder to your hosting provider.
 - Vue.js 3
 - ethers.js
 - MetaMask
-- CoinMarketCap API
+- CoinGecko API
 
 ## License
 This project is open source under the [MIT License](LICENSE).
