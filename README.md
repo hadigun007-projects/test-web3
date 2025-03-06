@@ -15,7 +15,7 @@ This app created for skill fest for Fullstack Position.
 ### 1. Clone the Repository
 ```sh
 git clone https://github.com/hadigun007-projects/test-web3.git
-cd git test-web3
+cd test-web3
 ```
 
 ### 2. Install Dependencies
