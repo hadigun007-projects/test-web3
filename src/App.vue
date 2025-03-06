@@ -4,6 +4,7 @@ import { ref, onMounted } from "vue";
 const selectedProvider = ref(null);
 const account = ref(null);
 const balance = ref(null);
+const cryptos = ref([]);
 
 const connectMetaMask = async () => {
   if (window.ethereum) {
@@ -61,6 +62,7 @@ const handleAccountChange = async (accounts) => {
 
 
 onMounted(async () => {
+  await fetchCryptoData();
   await connectMetaMask();
   if (window.ethereum) {
     try {
@@ -87,24 +89,16 @@ const disconnectWallet = async () => {
   alert("To fully disconnect, go to MetaMask and remove this site from the connected sites.");
 };
 
-// onMounted(async () => {
-//   if (window.ethereum) {
-//     try {
-//       const accounts = await window.ethereum.request({ method: "eth_accounts" });
+// 35733dc2-0c10-4297-8bc2-2e414eb431bb
 
-//       if (accounts.length > 0) {
-//         console.log("MetaMask already connected:", accounts[0]);
-//         const provider = new ethers.BrowserProvider(window.ethereum);
-
-//         selectedProvider.value = provider;
-//         account.value = accounts[0];
-//         balance.value = await getWalletBalance(provider, accounts[0]);
-//       }
-//     } catch (error) {
-//       console.error("Error checking existing connection:", error);
-//     }
-//   }
-// });
+const fetchCryptoData = async () => {
+  try {
+    const response = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1");
+    cryptos.value = await response.json();
+  } catch (error) {
+    console.error("Error fetching crypto data:", error);
+  }
+};
 </script>
 
 <template>
@@ -133,47 +127,21 @@ const disconnectWallet = async () => {
             <th>Asset Name</th>
             <th>Ticker</th>
             <th>Price</th>
-            <th>Percentage</th>
+            <th>Total Volume</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td></td>
-            <td>Bitcoin</td>
-            <td>BTC</td>
-            <td>999.99</td>
-            <td>+1.22%</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>Bitcoin</td>
-            <td>BTC</td>
-            <td>999.99</td>
-            <td>+1.22%</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>Bitcoin</td>
-            <td>BTC</td>
-            <td>999.99</td>
-            <td>+1.22%</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>Bitcoin</td>
-            <td>BTC</td>
-            <td>999.99</td>
-            <td>+1.22%</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>Bitcoin</td>
-            <td>BTC</td>
-            <td>999.99</td>
-            <td>+1.22%</td>
+          <tr v-for="crypto in cryptos" :key="crypto.id">
+            <td><img :src="crypto.image" alt="Crypto Logo" width="30" height="30" /></td>
+            <td>{{ crypto.name }}</td>
+            <td>{{ crypto.symbol.toUpperCase() }}</td>
+            <td>{{ crypto.current_price }}</td>
+            <td>{{ crypto.total_volume }}</td>
           </tr>
         </tbody>
       </table>
+      {{ cryptos.length > 0 ? "" : "Loading.." }}
+      <p v-if="cryptos.length > 0" style="color: dimgrey;font-size: 10px;margin-top: 2rem;">*Data provided by coingecko</p>
 
     </section>
   </div>
@@ -203,11 +171,14 @@ table {
   border-collapse: collapse;
 }
 th, td {
-  border: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
   padding: 0.5rem;
   text-align: center;
 }
 th {
   background-color: #f4f4f4;
+}
+table tr:nth-child(odd) {
+  background-color: #e4e4e4; /* Light gray for odd columns */
 }
 </style>

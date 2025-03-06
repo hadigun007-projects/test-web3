@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "ethers": "^6.13.5",
+    "express": "^4.21.2",
+    "node-fetch": "^3.3.2",
     "pinia": "^3.0.1",
     "vue": "^3.5.13"
   },
