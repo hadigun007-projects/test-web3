@@ -41,7 +41,7 @@ const connectMetaMask = async () => {
 
     return { account: accounts[0], provider, signer };
   } catch (error) {
-    alert(`Error connecting to MetaMask: ${error.message} or may conlict with another wallet provider (only enable metamask).`);
+    alert(`Error connecting to MetaMask: ${error.message} or may conflict with another wallet provider (only enable metamask).`);
     return null;
   }
 };
